@@ -1,0 +1,9 @@
+from main import db
+
+class Complaint(db.Model):
+	lat = db.Column(db.Float)
+	long = db.Column(db.Float)
+	accuracy = db.Column(db.Float)
+	class_complaint = db.Column(db.Integer)
+	problem_summary = db.Column(db.String(280))
+	problem_details = db.Column(db.String)
