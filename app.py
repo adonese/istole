@@ -10,10 +10,11 @@ from flask_migrate import Migrate
 csrf = CSRFProtect()
 app = Flask(__name__)
 app.config.from_object(Config)
-app.secret_key = '\x91\xb0*=\xd2Z\xa4\xca<\x9e\xb2F\xbfj\x11'
+app.secret_key = "\x91\xb0*=\xd2Z\xa4\xca<\x9e\xb2F\xbfj\x11"
 csrf.init_app(app)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+
 
 class Complaint(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -24,9 +25,11 @@ class Complaint(db.Model):
     short_describtion = db.Column(db.String(280))
     long_describtion = db.Column(db.String)
 
+
 gmaps = googlemaps.Client(key="AIzaSyDXQCAC5ShdlDdCacVs5eXKglPzuJNMQ9U")
 
-@app.route('/', methods=["POST", "GET"])
+
+@app.route("/", methods=["POST", "GET"])
 def index():
     form = SubmitForm()
     print(form.validate())
@@ -49,15 +52,16 @@ def index():
         q.long_describtion = form.long_describtion.data
         db.session.add(q)
         db.session.commit()
-        flash("Thank you so much for your response. Would you prefer a pepsi, or coca cola? Minicare is not allowed though.")
+        flash(
+            "Thank you so much for your response. Would you prefer a pepsi, or coca cola? Minicare is not allowed though."
+        )
     else:
         print("Where to fuck i fucked up.")
         for error in form.errors.items():
             flash(error)
 
-    return render_template('index.html', form=form)
+    return render_template("index.html", form=form)
 
 
 if __name__ == "__main__":
     app.run(debug=True)
-    
