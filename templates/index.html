@@ -1,157 +1,195 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>You may not like this page.</title>
 
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<head>
+  <!-- Primary Meta Tags -->
+  <title>iStole Your </title>
+  <meta name="title" content="iStole ">
+  <meta name="description"
+    content="iStole is a simple form for reporting frauds from merchant, government services (E15), and other forms of frauds. This is a non government initiatives and the data are freely available for the government and the decision makers for any further analysis or studies.">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://istole.noebs.dev/">
+  <meta property="og:title" content="iStole ">
+  <meta property="og:description"
+    content="iStole is a simple form for reporting frauds from merchant, government services (E15), and other forms of frauds. This is a non government initiatives and the data are freely available for the government and the decision makers for any further analysis or studies.">
+  <meta property="og:image" content="/statics/wallpaper.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://istole.noebs.dev">
+  <meta property="twitter:title" content="iStole ">
+  <meta property="twitter:description"
+    content="iStole is a simple form for reporting frauds from merchant, government services (E15), and other forms of frauds. This is a non government initiatives and the data are freely available for the government and the decision makers for any further analysis or studies.">
+  <meta property="twitter:image" content="/statics/wallpaper.png">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 </head>
+
 <body>
 
 
-    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-      <h5 class="my-0 mr-md-auto font-weight-normal">iStole</h5>
-      <nav class="my-2 my-md-0 mr-md-3">
-        <a class="p-2 text-dark" href="#about">About</a>
-      </nav>
-      <a class="btn btn-outline-primary" href="#">Sign up</a>
+  <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+    <h5 class="my-0 mr-md-auto font-weight-normal">iStole</h5>
+    <nav class="my-2 my-md-0 mr-md-3">
+      <a class="p-2 text-dark" href="#about">About</a>
+    </nav>
+    <a class="btn btn-outline-primary" href="#">Sign up</a>
+  </div>
+
+
+
+
+
+  <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">What is this?</h1>
+    <p class="lead">
+      We want to stop those bastards from stealing our money. This program is very simple. Whenever you visit a store,
+      and you suspect that they might have stolen your moeny e.g., they sell things higher than others do, just hit the
+      button. We <el>cannot</el> enfore law here. It is never been the goal of this project. All we have here is a
+      collection of locations of places we believe they sell things for higher prices.
+    </p>
+
+    <button type="button" class="btn btn-primary" onclick="geoFindMe()">Get 'em down!</button>
+    <div id="out"></div>
+    <br><br>
+    <div class="container">
+      <form method=post>
+        {{ form.csrf_token }}
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label col-form-label-sm">{{form.short_describtion.label}}</label>
+          <div class="col-sm-10">
+            <textarea class="form-control" rows="3" name="short_describtion" required></textarea>
+            <small id="emailHelp" class="form-text text-muted">Watch out for the cups, dude.</small>
+          </div>
+
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label col-form-label-sm">Latitude (will be automatically calculated)</label>
+          <div class="col-sm-10">
+            <input name="lat" type="number" step=any id="lat" class="form-control"
+              placeholder="will be automatically fetched" required>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label col-form-label-sm">Longitude (will be automatically calculated)</label>
+          <div class="col-sm-10">
+            <input name="long" type="number" step="any" id="long" class="form-control"
+              placeholder="will be automatically fetched" required>
+          </div>
+        </div>
+        <!--Begin of something-->
+
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label col-form-label-sm">Accuracy (will be automatically calculated)</label>
+          <div class="col-sm-10">
+            <input name="long" type="number" step="any" id="long" class="form-control"
+              placeholder="will be automatically fetched">
+          </div>
+        </div>
+        <!--Begin of something-->
+        <!--End of another thing-->
+
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label col-form-label-sm">{{form.long_describtion.label}}</label>
+          <div class="col-sm-10">
+            <textarea name="long_describtion" class="form-control" rows="3"></textarea>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary" name="submit">Submit</button>
+        </div>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class="flashes">
+          {% for message in messages %}
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>Holy guacamole!</strong> {{message}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+      </form>
+
     </div>
 
-
-
-
-
-<div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-	<h1 class="display-4">What is this?</h1>
-	<p class="lead">
-		We want to stop those bastards from stealing our money. This program is very simple. Whenever you visit a store, and you suspect that they might have stolen your moeny e.g., they sell things higher than others do, just hit the button. We <el>cannot</el> enfore law here. It is never been the goal of this project. All we have here is a collection of locations of places we believe they sell things for higher prices.
-	</p>
-
-	<button type="button" class="btn btn-primary" onclick="geoFindMe()">Get 'em down!</button>
-<div id="out"></div>
-<br><br>
-<div class="container">
-<form method=post>
-	{{ form.csrf_token }}
-  <div class="form-group row">
-    <label class="col-sm-2 col-form-label col-form-label-sm">{{form.short_describtion.label}}</label>
-    <div class="col-sm-10">
-    <textarea class="form-control" rows="3" name="short_describtion" required></textarea>
-    <small id="emailHelp" class="form-text text-muted">Watch out for the cups, dude.</small>
   </div>
 
+  <div class="container">
+    <h1 id="about">About this application</a></h1>
+    <p class="lead">We only use this this application to study how fucked-up we are. This is not a state
+      powered/sponsored application. So, you can chill.
+      Also, not that this application has no way to reinforce the law, by any means. It is just meant to understand in a
+      concrete way how things are bad here.
+    </p>
   </div>
 
-  <div class="form-group row">
-  	<label class="col-sm-2 col-form-label col-form-label-sm">Latitude (will be automatically calculated)</label>
-  	<div class="col-sm-10">
-  	<input name="lat" type="number" step=any id="lat" class="form-control" placeholder="will be automatically fetched" required>
-  </div>
-  </div>
 
-  <div class="form-group row">
-  	<label class="col-sm-2 col-form-label col-form-label-sm">Longitude (will be automatically calculated)</label>
-  	<div class="col-sm-10">
-  	<input name="long" type="number" step="any" id="long" class="form-control" placeholder="will be automatically fetched" required>
-  </div>
-</div>
-<!--Begin of something-->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
 
-  <div class="form-group row">
-  	<label class="col-sm-2 col-form-label col-form-label-sm">Accuracy (will be automatically calculated)</label>
-  	<div class="col-sm-10">
-  	<input name="long" type="number" step="any" id="long" class="form-control" placeholder="will be automatically fetched">
-  </div>
-</div>
-<!--Begin of something-->
-<!--End of another thing-->
+  <script type="text/javascript">
+    var options = {
+      enableHighAccuracy: false,
+      timeout: 5000,
+      maximumAge: 0
+    };
 
-  <div class="form-group row">
-    <label class="col-sm-2 col-form-label col-form-label-sm">{{form.long_describtion.label}}</label>
-    <div class="col-sm-10">
-    <textarea name="long_describtion" class="form-control" rows="3"></textarea>
-  </div>
-  </div>
-  
-  <div class="form-group">
-  <button type="submit" class="btn btn-primary" name="submit">Submit</button>
-</div>
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <ul class="flashes">
-    {% for message in messages %}
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-      <strong>Holy guacamole!</strong> {{message}}
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    {% endfor %}
-    </ul>
-  {% endif %}
-{% endwith %}
-</form>
+    function geoFindMe() {
+      var output = document.getElementById("out");
 
-</div>
+      if (!navigator.geolocation) {
+        output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
+        return;
+      }
 
-</div>
+      function success(position) {
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
+        var accuracy = position.coords.accuracy;
 
-<div class="container">
-  <h1 id="about">About this application</a></h1>
-<p class="lead">We only use this this application to study how fucked-up we are. This is not a state powered/sponsored application. So, you can chill.
-  Also, not that this application has no way to reinforce the law, by any means. It is just meant to understand in a concrete way how things are bad here.
-</p>
-</div>
+        //output.innerHTML = '<p>Latitude is ' + latitude + '<br>Longitude is ' + longitude + "\n" + "accuracy is" + accuracy + '</p>';
+
+        document.getElementById("lat").value = latitude;
+        document.getElementById("long").value = longitude;
+        document.getElementById("accuracy").value = accuracy;
 
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        // var img = new Image();
+        // img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=13&size=300x300&sensor=false";
 
-<script type="text/javascript">
-var options = {
-  enableHighAccuracy: false,
-  timeout: 5000,
-  maximumAge: 0
-};
+        // output.appendChild(img);
+        return
+      }
 
-function geoFindMe() {
-  var output = document.getElementById("out");
+      function error() {
+        output.innerHTML = "Unable to retrieve your location";
+      }
 
-  if (!navigator.geolocation){
-    output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
-    return;
-  }
+      output.innerHTML = "<p>Locating…</p>";
 
-  function success(position) {
-    var latitude  = position.coords.latitude;
-    var longitude = position.coords.longitude;
-    var accuracy = position.coords.accuracy;
-
-    //output.innerHTML = '<p>Latitude is ' + latitude + '<br>Longitude is ' + longitude + "\n" + "accuracy is" + accuracy + '</p>';
-
-    document.getElementById("lat").value = latitude;
-    document.getElementById("long").value = longitude;
-    document.getElementById("accuracy").value = accuracy;
-
-
-    // var img = new Image();
-    // img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=13&size=300x300&sensor=false";
-
-    // output.appendChild(img);
-    return
-  }
-
-  function error() {
-    output.innerHTML = "Unable to retrieve your location";
-  }
-
-  output.innerHTML = "<p>Locating…</p>";
-
-  var coords = navigator.geolocation.getCurrentPosition(success, error);
-	console.log(coords)
-}
-</script>
+      var coords = navigator.geolocation.getCurrentPosition(success, error);
+      console.log(coords)
+    }
+  </script>
 
 </body>
+
 </html>

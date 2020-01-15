@@ -8,7 +8,7 @@ from flask_wtf.csrf import CSRFProtect
 from flask_migrate import Migrate
 
 csrf = CSRFProtect()
-app = Flask(__name__)
+app = Flask(__name__, static_folder="statics")
 app.config.from_object(Config)
 app.secret_key = "\x91\xb0*=\xd2Z\xa4\xca<\x9e\xb2F\xbfj\x11"
 csrf.init_app(app)
