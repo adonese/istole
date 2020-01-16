@@ -3,7 +3,7 @@
 
 <head>
   <!-- Primary Meta Tags -->
-  <title>iStole Your </title>
+  <title>iStole</title>
   <meta name="title" content="iStole ">
   <meta name="description"
     content="iStole is a simple form for reporting frauds from merchant, government services (E15), and other forms of frauds. This is a non government initiatives and the data are freely available for the government and the decision makers for any further analysis or studies.">
@@ -179,14 +179,16 @@
         return
       }
 
-      function error() {
+      function error(err) {
         output.innerHTML = "Unable to retrieve your location";
+        console.log('ERROR(' + err.code + '): ' + err.message);
       }
 
       output.innerHTML = "<p>Locating…</p>";
 
       var coords = navigator.geolocation.getCurrentPosition(success, error);
       console.log(coords)
+      console.log(error)
     }
   </script>
 
