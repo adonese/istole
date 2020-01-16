@@ -49,7 +49,7 @@
     <p class="lead">
       We want to stop those bastards from stealing our money. This program is very simple. Whenever you visit a store,
       and you suspect that they might have stolen your moeny e.g., they sell things higher than others do, just hit the
-      button. We <el>cannot</el> enfore law here. It is never been the goal of this project. All we have here is a
+      button. We <el>cannot</el> enforce law here. It is never been the goal of this project. All we have here is a
       collection of locations of places we believe they sell things for higher prices.
     </p>
 
@@ -63,7 +63,7 @@
           <label class="col-sm-2 col-form-label col-form-label-sm">{{form.short_describtion.label}}</label>
           <div class="col-sm-10">
             <textarea class="form-control" rows="3" name="short_describtion" required></textarea>
-            <small id="emailHelp" class="form-text text-muted">Watch out for the cups, dude.</small>
+            <small id="emailHelp" class="form-text text-muted">Submissions are totally anonymous.</small>
           </div>
 
         </div>
@@ -83,18 +83,8 @@
               placeholder="will be automatically fetched" required>
           </div>
         </div>
-        <!--Begin of something-->
 
-        <div class="form-group row">
-          <label class="col-sm-2 col-form-label col-form-label-sm">Accuracy (will be automatically calculated)</label>
-          <div class="col-sm-10">
-            <input name="long" type="number" step="any" id="long" class="form-control"
-              placeholder="will be automatically fetched">
-          </div>
-        </div>
-        <!--Begin of something-->
-        <!--End of another thing-->
-
+        <!--Long description div-->
         <div class="form-group row">
           <label class="col-sm-2 col-form-label col-form-label-sm">{{form.long_describtion.label}}</label>
           <div class="col-sm-10">
@@ -110,7 +100,7 @@
         <ul class="flashes">
           {% for message in messages %}
           <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <strong>Holy guacamole!</strong> {{message}}
+            {{message}}
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>

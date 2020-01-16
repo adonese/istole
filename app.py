@@ -52,9 +52,7 @@ def index():
         q.long_describtion = form.long_describtion.data
         db.session.add(q)
         db.session.commit()
-        flash(
-            "Thank you so much for your response. Would you prefer a pepsi, or coca cola? Minicare is not allowed though."
-        )
+        flash("Thank you so much for your submission!")
     else:
         print("Where to fuck i fucked up.")
         for error in form.errors.items():
