@@ -32,15 +32,9 @@ gmaps = googlemaps.Client(key="AIzaSyDXQCAC5ShdlDdCacVs5eXKglPzuJNMQ9U")
 @app.route("/", methods=["POST", "GET"])
 def index():
     form = SubmitForm()
-    print(form.validate())
-    print(form.lat.data)
-    print(form.long.data)
-    print(form.accuracy.data)
+    if request.method == "GET":
+        return render_template("index.html", form=form)
 
-    print(form.short_describtion.data)
-    print(form.submit.data)
-
-    print(form.long_describtion.data)
     if form.validate_on_submit():
         print(form.validate())
         print("It is working.")
