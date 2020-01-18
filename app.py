@@ -5,7 +5,7 @@ from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from forms import SubmitForm
 from flask_wtf.csrf import CSRFProtect
-from flask_migrate import Migrate
+#from flask_migrate import Migrate
 
 import geopy
 
@@ -17,7 +17,7 @@ app.config.from_object(Config)
 app.secret_key = "\x91\xb0*=\xd2Z\xa4\xca<\x9e\xb2F\xbfj\x11"
 csrf.init_app(app)
 db = SQLAlchemy(app)
-migrate = Migrate(app, db)
+#migrate = Migrate(app, db)
 
 
 class Complaint(db.Model):
