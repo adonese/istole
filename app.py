@@ -51,7 +51,7 @@ def index():
         db.session.add(q)
         db.session.commit()
         flash("Thank you so much for your submission!")
-        address = get_address(lat, long)
+        address = get_address(form.lat.data, form.long.data)
     else:
         print("Where to fuck i fucked up.")
         for error in form.errors.items():
