@@ -7,6 +7,10 @@ from forms import SubmitForm
 from flask_wtf.csrf import CSRFProtect
 from flask_migrate import Migrate
 
+import geopy
+
+from geopy.geocoders import Nominatim
+
 csrf = CSRFProtect()
 app = Flask(__name__, static_folder="statics")
 app.config.from_object(Config)
@@ -47,9 +51,23 @@ def index():
         db.session.add(q)
         db.session.commit()
         flash("Thank you so much for your submission!")
+        address = get_address(lat, long)
     else:
         print("Where to fuck i fucked up.")
         for error in form.errors.items():
             flash(error)
 
-    return render_template("index.html", form=form)
+    return render_template("index.html", form=form, address=address)
+
+
+def get_location(lat: str, long: str) -> geopy.location.Location:
+    "A raw structured format for the user submitted reverese location."
+    geo = Nominatim(user_agent="istole_website")
+    location = geo.reverse(f"{lat}, {long}")
+    return location
+
+
+def get_address(lat: str, long: str) -> str:
+    "A str representation for the user's location"
+    location = get_location(lat, long)
+    return location.address

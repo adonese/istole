@@ -111,6 +111,11 @@
       {% endif %}
       {% endwith %}
     </form>
+
+    {% if address %}
+    <p>Your location is</p>
+    {{address}}
+    {% endif %}
   </div>
 
   <div class="container">
