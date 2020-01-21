@@ -1,4 +1,3 @@
-import googlemaps
 from datetime import datetime
 from flask import Flask, render_template, url_for, flash, request
 from config import Config
@@ -28,9 +27,10 @@ class Complaint(db.Model):
     class_complaint = db.Column(db.Integer)
     short_describtion = db.Column(db.String(280))
     long_describtion = db.Column(db.String)
+    # image = db.Column(db.Blop)
 
 
-gmaps = googlemaps.Client(key="AIzaSyDXQCAC5ShdlDdCacVs5eXKglPzuJNMQ9U")
+# gmaps = googlemaps.Client(key="AIzaSyDXQCAC5ShdlDdCacVs5eXKglPzuJNMQ9U")
 
 
 @app.route("/", methods=["POST", "GET"])

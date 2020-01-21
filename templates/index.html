@@ -119,6 +119,13 @@
   </div>
 
   <div class="container">
+    <!--Camera API-->
+    <video autoplay></video>
+    <img src="">
+    <canvas style="display:none;"></canvas>
+  </div>
+
+  <div class="container">
     <h1 id="about">About this application</a></h1>
     <p class="lead">We only use this this application to report fraud incidents. Esp. for those state subsidized
       products. This is not a state
@@ -127,6 +134,7 @@
       concrete way how things are bad here.
     </p>
   </div>
+
 
 
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -183,6 +191,34 @@
       var coords = navigator.geolocation.getCurrentPosition(success, error);
       console.log(coords)
       console.log(error)
+    }
+  </script>
+
+  <script>
+    const captureVideoButton =
+      document.querySelector('#screenshot .capture-button');
+    const screenshotButton = document.querySelector('#screenshot-button');
+    const img = document.querySelector('#screenshot img');
+    const video = document.querySelector('#screenshot video');
+
+    const canvas = document.createElement('canvas');
+
+    captureVideoButton.onclick = function () {
+      navigator.mediaDevices.getUserMedia(constraints).
+        then(handleSuccess).catch(handleError);
+    };
+
+    screenshotButton.onclick = video.onclick = function () {
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      canvas.getContext('2d').drawImage(video, 0, 0);
+      // Other browsers will fall back to image/png
+      img.src = canvas.toDataURL('image/webp');
+    };
+
+    function handleSuccess(stream) {
+      screenshotButton.disabled = false;
+      video.srcObject = stream;
     }
   </script>
 
