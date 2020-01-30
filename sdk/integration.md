@@ -54,6 +54,14 @@ This is a suggested figure, but we will develop a new revolutionary face figure 
 
 Our admin dashboard will be provided by iStole. It currently only provides geospatial data -- and more data and analysis can be provided as well.
 
+## Data Accessibility
+
+Data should be freely avaialble for state actors and every one. There's no reason to lock the data behind any sort of authentication system.
+
+## Interoperability
+
+We believe that interoperability should be a major factor behind deciding upon any system. iStole offers an unprecedented level of interoperability in that all of our data, including our source code is freely available for everyone to reuse, modify and redistribute, without any license whatsoever. This is very important and it is something we have been pushing very hard to normalize.
+
 ## Android App
 
 An android app will be developed to used throughout the system. It will support the main web app.
