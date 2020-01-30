@@ -11,4 +11,8 @@ COPY --from=builder /install /usr/local
 COPY . /app
 WORKDIR /app
 
+<<<<<<< HEAD
+CMD ["gunicorn", "--bind", "127.0.0.1:8082", "--workers", "3", "app:app"]
+=======
 CMD ["gunicorn", "--bind 127.0.0.1:8082","-w 3", "app:app"]
+>>>>>>> 8e24edb24822ec2f33c0c7e62672540febf50550
