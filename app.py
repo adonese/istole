@@ -1,10 +1,13 @@
 from datetime import datetime
-from flask import Flask, render_template, url_for, flash, request
+from flask import Flask, render_template, url_for, flash, request, jsonify
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from forms import SubmitForm
 from flask_wtf.csrf import CSRFProtect
-#from flask_migrate import Migrate
+
+from helper import json_handler
+
+# from flask_migrate import Migrate
 
 import geopy
 
@@ -14,9 +17,9 @@ csrf = CSRFProtect()
 app = Flask(__name__, static_folder="statics")
 app.config.from_object(Config)
 app.secret_key = "\x91\xb0*=\xd2Z\xa4\xca<\x9e\xb2F\xbfj\x11"
-csrf.init_app(app)
+# csrf.init_app(app)
 db = SQLAlchemy(app)
-#migrate = Migrate(app, db)
+# migrate = Migrate(app, db)
 
 
 class Complaint(db.Model):
@@ -29,6 +32,16 @@ class Complaint(db.Model):
     long_describtion = db.Column(db.String)
     # image = db.Column(db.Blop)
 
+    @property
+    def serialize(self):
+        return {
+            "id": self.id,
+            "lat": self.lat,
+            "long": self.long,
+            "short_description": self.short_describtion,
+            "long_description": self.long_describtion,
+        }
+
 
 # gmaps = googlemaps.Client(key="AIzaSyDXQCAC5ShdlDdCacVs5eXKglPzuJNMQ9U")
 
@@ -36,13 +49,19 @@ class Complaint(db.Model):
 @app.route("/", methods=["POST", "GET"])
 def index():
     form = SubmitForm()
+    q = Complaint()
+
+    if request.mimetype == "application/json" and request.method == "POST":
+        code, message = json_handler(request.json, q, db)
+        return jsonify(message), code, {"content-type": "application/json"}
+
     if request.method == "GET":
         return render_template("index.html", form=form)
 
     if form.validate_on_submit():
         print(form.validate())
         print("It is working.")
-        q = Complaint()
+
         q.lat = form.lat.data
         q.long = form.long.data
         # q.accuracy = form.accuracy.data
@@ -71,3 +90,16 @@ def get_address(lat: str, long: str) -> str:
     "A str representation for the user's location"
     location = get_location(lat, long)
     return location.address
+
+
+@app.route("/get")
+def get_data():
+    id = request.args.get("id")
+    if id:
+        c = Complaint()
+        data = c.query.filter_by(id=id)
+        return jsonify([i.serialize for i in data.all()])
+    else:
+        c = Complaint()
+        data = c.query.all()
+        return jsonify([i.serialize for i in data])
