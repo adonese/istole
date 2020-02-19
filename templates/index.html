@@ -128,76 +128,94 @@
     </p>
   </div>
 
-  <button>Start streaming</button>
-  <video autoplay>Start streaming</button>
+  <!-- Camera viewport -->
 
+  <video id="video" width="640" height="480" autoplay></video>
+  <button id="snap" class="sexyButton">Snap Photo</button>
+  <canvas id="canvas" width="640" height="480"></canvas>
 
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-      crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-      crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    var options = {
+      enableHighAccuracy: false,
+      timeout: 5000,
+      maximumAge: 0
+    };
 
-    <script type="text/javascript">
-      var options = {
-        enableHighAccuracy: false,
-        timeout: 5000,
-        maximumAge: 0
-      };
+    function geoFindMe() {
+      var output = document.getElementById("out");
 
-      function geoFindMe() {
-        var output = document.getElementById("out");
-
-        if (!navigator.geolocation) {
-          output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
-          return;
-        }
-
-        function success(position) {
-          var latitude = position.coords.latitude;
-          var longitude = position.coords.longitude;
-          var accuracy = position.coords.accuracy;
-
-          //output.innerHTML = '<p>Latitude is ' + latitude + '<br>Longitude is ' + longitude + "\n" + "accuracy is" + accuracy + '</p>';
-
-          document.getElementById("lat").value = latitude;
-          document.getElementById("long").value = longitude;
-          document.getElementById("accuracy").value = accuracy;
-
-
-          // var img = new Image();
-          // img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=13&size=300x300&sensor=false";
-
-          // output.appendChild(img);
-          return
-        }
-
-        function error(err) {
-          output.innerHTML = "Unable to retrieve your location";
-          console.log('ERROR(' + err.code + '): ' + err.message);
-        }
-
-        output.innerHTML = "<p>Locating…</p>";
-
-        var coords = navigator.geolocation.getCurrentPosition(success, error);
-        console.log(coords)
-        console.log(error)
+      if (!navigator.geolocation) {
+        output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
+        return;
       }
-    </script>
 
-    <script>
-      document.querySelector('button').addEventListener('click', async (e) => {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: true
-        })
-        document.querySelector('video').srcObject = stream
-      })
-    </script>
+      function success(position) {
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
+        var accuracy = position.coords.accuracy;
+
+        //output.innerHTML = '<p>Latitude is ' + latitude + '<br>Longitude is ' + longitude + "\n" + "accuracy is" + accuracy + '</p>';
+
+        document.getElementById("lat").value = latitude;
+        document.getElementById("long").value = longitude;
+        document.getElementById("accuracy").value = accuracy;
+
+
+        // var img = new Image();
+        // img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=13&size=300x300&sensor=false";
+
+        // output.appendChild(img);
+        return
+      }
+
+      function error(err) {
+        output.innerHTML = "Unable to retrieve your location";
+        console.log('ERROR(' + err.code + '): ' + err.message);
+      }
+
+      output.innerHTML = "<p>Locating…</p>";
+
+      var coords = navigator.geolocation.getCurrentPosition(success, error);
+      console.log(coords)
+      console.log(error)
+    }
+
+    var canvas = document.getElementById('canvas');
+    var context = canvas.getContext('2d');
+    var video = document.getElementById('video');
+
+    // Trigger photo take
+    document.getElementById("snap").addEventListener("click", function () {
+      context.drawImage(video, 0, 0, 640, 480);
+    });
+
+
+    // Get the media
+    var video = document.getElementById('video');
+
+    // Get access to the camera!
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      // Not adding `{ audio: true }` since we only want video now
+      navigator.mediaDevices.getUserMedia({ video: true }).then(function (stream) {
+        //video.src = window.URL.createObjectURL(stream);
+        video.srcObject = stream;
+        video.play();
+      });
+    } else {
+      console.log("there is an error, unable to grab your camera device!")
+    }
+  </script>
+
 </body>
 
 </html>
