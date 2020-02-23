@@ -32,6 +32,12 @@ class Complaint(db.Model):
     long_describtion = db.Column(db.String)
     # image = db.Column(db.Blop)
 
+    def __str__(self):
+        return f"complain_lat_{self.lat}_long_{self.long}"
+
+    def __repr__(self):
+        return f"complain_lat_{self.lat}_long_{self.long}"
+
     @property
     def serialize(self):
         return {
