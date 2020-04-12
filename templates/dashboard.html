@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Primary Meta Tags -->
+    <title>iStole</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="title" content="iStole ">
+    <meta name="description"
+        content="iStole is a simple form for reporting frauds from merchant, government services (E15), and other forms of frauds. This is a non government initiatives and the data are freely available for the government and the decision makers for any further analysis or studies.">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://istole.noebs.dev/">
+    <meta property="og:title" content="iStole ">
+    <meta property="og:description"
+        content="iStole is a simple form for reporting frauds from merchant, government services (E15), and other forms of frauds. This is a non government initiatives and the data are freely available for the government and the decision makers for any further analysis or studies.">
+    <meta property="og:image" content="/statics/wallpaper.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://istole.noebs.dev">
+    <meta property="twitter:title" content="iStole ">
+    <meta property="twitter:description"
+        content="iStole is a simple form for reporting frauds from merchant, government services (E15), and other forms of frauds. This is a non government initiatives and the data are freely available for the government and the decision makers for any further analysis or studies.">
+    <meta property="twitter:image" content="/statics/wallpaper.png">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Problem</th>
+                <th scope="col">Long Description</th>
+                <th scope="col">Latitude</th>
+                <th scope="col">Longitude</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for range item %}
+            <tr>
+                <th scope="row">{{item.short_describtion}}</th>
+                <td>{{item.long_describtion}}</td>
+                <td>{{item.lat}}</td>
+                <td>{{item.long}}</td>
+            </tr>
+            {% endfor % }
+        </tbody>
+    </table>
+</body>
+</html>
