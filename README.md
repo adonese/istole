@@ -9,22 +9,25 @@ Method: POST
 mimetype: json
 Endpoint: /
 
-Request fields:
+## Request fields:
 
+```
 ["short_description", "long_description", "lat", "long"]
 
-short_description:
+```
+
+### short_description:
 
 a brief description of the problem (mandatory)
 
-long description:
+### long description:
 
 A long desciption of the problem / issue. Optional
 
-lat:
+### lat:
 
 GPS latitude coordinates
 
-long:
+### long:
 
 GPS longitude coordinates
