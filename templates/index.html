@@ -128,11 +128,6 @@
     </p>
   </div>
 
-  <button>Start streaming</button>
-  <video autoplay>Start streaming</button>
-
-
-
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
       integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
       crossorigin="anonymous"></script>
@@ -190,14 +185,6 @@
       }
     </script>
 
-    <script>
-      document.querySelector('button').addEventListener('click', async (e) => {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: true
-        })
-        document.querySelector('video').srcObject = stream
-      })
-    </script>
 </body>
 
 </html>
